@@ -1,6 +1,9 @@
 
 #include <iostream>
 #include <stdio.h>
+#include <vector>
+#include <string>
+#include <algorithm>
 
 using namespace std;
 
@@ -32,7 +35,7 @@ int main(int argc, char ** argv) {
         sam *= i;
     cout << sam << endl;
 #endif
-#if 0 /* 2.9  让用户输入两个数值，并告诉用户哪个大 */
+#if 0 /* 2.9 让用户输入两个数值，并告诉用户哪个大 */
     int a, b;
     cout << "Plz input 2 interges:" << endl; // , end with end-of-file
     cin >> a >> b;
@@ -40,10 +43,41 @@ int main(int argc, char ** argv) {
     cout << ((a==b)?"The intergers is same.":"Not the same")<< endl;
 
 #endif
+///===============================================================
+#if 0 /* 3.3 把一个整数集合分为四部分，每部分的数值比其它各部分都大 */
+    cout << "Plz input some integers:" << endl;
+    vector<int> collects;
+    int rec;
+    while (cin >> rec) {
+        collects.push_back(rec);
+    }
+    if (0 == collects.size()) {
+        cout << "No inputs!" << endl;
+        return -1;
+    }
+    while(collects.size() % 4 != 0) 
+        collects.push_back(0); // 使集合能被4除尽
     
-    getchar();
+    sort(collects.rbegin(), collects.rend());
+    //sort(collects.begin(), collects.end());
+    vector<int>::size_type part_size = collects.size() / 4;
+    for (int i=0; i<4; ++i) {
+        for (int j=0; j<part_size; ++j) {
+            cout << collects[i*part_size + j] << "\t";
+        }
+        cout << endl;
+    }
+#endif
+#if 1 /*  */
+#endif
+
+
+
+    system("pause");
     return 0;
 }
+
+
 
 
 
