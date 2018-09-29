@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include "calc.h"
 
 using namespace std;
 
@@ -44,7 +45,7 @@ int main(int argc, char ** argv) {
 
 #endif
 ///===============================================================
-#if 0 /* 3.3 把一个整数集合分为四部分，每部分的数值比其它各部分都大 */
+#if 0 /* 3.2 把一个整数集合分为四部分，每部分的数值比其它各部分都大 */
     cout << "Plz input some integers:" << endl;
     vector<int> collects;
     int rec;
@@ -68,9 +69,62 @@ int main(int argc, char ** argv) {
         cout << endl;
     }
 #endif
-#if 1 /*  */
+#if 0 /* 3.3 编写一个程序来计算它的输入中每个不同的单词所出现的次数 */
+    cout << "Plz input some words, end with end-of-file:" << endl;
+    //cout << endl;
+    typedef string::size_type ssize;
+    vector<string> words;
+    vector<ssize> counts;
+    string record;
+    string::size_type maxlen = 0;
+    while(cin >> record) {
+        if(words.end() == find(words.begin(), words.end(), record)) {
+            maxlen = max(maxlen, record.size());
+            words.push_back(record);
+            counts.push_back(1);
+        }
+        else {
+            vector<string>::size_type pos ;
+            for (pos=0; pos<words.size(); ++pos) {
+                if (words[pos] == record)
+                    break;
+            }
+            if(pos != words.size())
+                counts[pos] ++;
+        }
+    }
+    vector<string>::const_iterator it;
+    vector<ssize>::const_iterator iit;
+    for (it = words.begin(), iit=counts.begin();
+            it != words.end(), iit!=counts.end(); ++it, ++iit) {
+        // construct output string
+        string out = string(maxlen - it->size(), ' ');
+        out += *it;
+        out += '\t';
+        cout << out << *iit << endl;
+    }
+    // ctrl^Z 结束字符串的输入
 #endif
-
+#if 0 /* 3.4 编写程序报告输入中最长及最短字符串及其长度 */
+    string maxstr, minstr;
+    string::size_type mx=0, mn=0;
+    cout << "Strs:";
+    string s;
+    cin >> s;
+    mx = mn = s.size();
+    while(cin >> s) {
+        if (s.size() > mx) {
+            maxstr = s;
+            mx = s.size();
+        }
+        else if (s.size() < mn) {
+            minstr = s;
+            mn = s.size();
+        }
+    }
+    cout << "Max: " << maxstr << "\t" << mx << endl;
+    cout << "Min: " << minstr << "\t" << mn << endl;
+#endif
 
 
     system("pause");
