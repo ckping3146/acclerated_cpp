@@ -4,6 +4,9 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <ios>
+#include <stdexcept>
+#include <iomanip>
 #include "calc.h"
 
 using namespace std;
@@ -125,8 +128,51 @@ int main(int argc, char ** argv) {
     cout << "Max: " << maxstr << "\t" << mx << endl;
     cout << "Min: " << minstr << "\t" << mn << endl;
 #endif
+///================================================================
+#if 0 /* 
+        4.2 编写一个程序计算1~100的整数（int）值的平方。程序的输出分为
+        两列，第一列是整数，第二列是平方。使用控制器来控制输出
+        setw（int n）只是对直接跟在<<后的输出数据起作用，而在之后的<<需要在之前再一次使用setw 
+        n是在输出时分配了n个字符的输出宽度，然后默认的是在n个字符宽度中右对齐输出，
+        可以使用setiosflags（iOS::left）设置为左对齐输出，
+        可以使用setfill('char x')使用x来填充空下的空格  
+    */
+    const int Min = 900, Max = 999;
+    streamsize w1 = 0, w2 = 0;
+    int tmp = Max;
+    while(tmp != 0) {
+        tmp = tmp / 10;
+        w1++;
+    }
+    tmp = Max * Max;
+    while(tmp != 0) {
+        tmp = tmp / 10;
+        w2++;
+    }
+    cout << "w1 = " << w1 << ", w2 = " << w2 << endl;
+    for (int i=Min;i<=Max; ++i) {
+        
+        cout << setw(w1+1) << i << setw(w2+1) << i*i << endl;
+    }
+#endif
+#if 1 /* 4.5 编写函数从流读入单词，存在向量中，利用此函数编写一个程序来计算输入的单词的数目以及每个单词所出现的次数 */
+    vector<string> words = readwords(cin);
+    cout << "Read " << words.size() << " words." << endl;
+    string::size_type maxlen = 0;
 
-
+    vector<words_info> info;
+    for (vector<string>::size_type i=0; i!=words.size(); ++i) {
+        maxlen = max(maxlen, words[i].size());
+        words_info rec;
+        rec.count = 1;
+        rec.s = words[i];
+        for (vector<words_info>::size_type j=0; j<info.size(); ++j) {
+            if (words[i] == info[j].s)
+                info[j].count++;
+            else info.push_back(rec);
+        }
+    }
+#endif
     system("pause");
     return 0;
 }
